@@ -28,7 +28,8 @@ export default function Login() {
       const handleClose = () => {
     setOpen(false);
   };
-    const handleSubmit = async (e) => {
+  console.log("component loading")
+    const handleSubmit = async (e) => {     
      e.preventDefault();
     const data = new FormData(e.currentTarget);
     const username = data.get('username');
@@ -44,6 +45,7 @@ export default function Login() {
 
           if (result) {
             console.log("logged in")
+            navigate('/dashbaord')
           } else {
             setOpen(true);
           }
