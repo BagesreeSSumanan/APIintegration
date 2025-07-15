@@ -4,10 +4,6 @@ import {
   Avatar,
   Button,
   TextField,
-  FormControlLabel,
-  Checkbox,
-  Link,
-  Grid,
   Box,
   Typography,
   Container,
@@ -26,35 +22,37 @@ import { useState } from 'react'
 
 export default function Login() {
  
-const [username, setUsername] = useState('');
-const [password, setPassword] = useState('');
+
   const navigate = useNavigate(); 
   const [open, setOpen] = React.useState(false);
       const handleClose = () => {
     setOpen(false);
   };
     const handleSubmit = async (e) => {
-    e.preventDefault();
- try {
-      const response = await axios.post('http://localhost:53522/api/auth/login', {
-        username: username,
-        password: password,
-      });
+     e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const username = data.get('username');
+    const password = data.get('password');
+    try {
+          const response = await axios.post('http://localhost:53522/api/auth/login', {
+            username: username,
+            password: password,
+          });
 
-      console.log('Login success:', response.data);
-      const result = response.data;
+          console.log('Login success:', response.data);
+          const result = response.data;
 
-      if (result) {
-        console.log("logged in")
-      } else {
-        setOpen(true); // invalid credentials
-      }
+          if (result) {
+            console.log("logged in")
+          } else {
+            setOpen(true);
+          }
 
-    } catch (error) {
-      console.error('Login error:', error);
-      setOpen(true); 
-    }
-  };
+        } catch (error) {
+          console.error('Login error:', error);
+          setOpen(true); 
+        }
+      };
 
 
 
@@ -84,7 +82,7 @@ const [password, setPassword] = useState('');
               name="username"
               autoComplete="username"
               autoFocus
-              onChange={(e) => setUsername(e.target.value)}
+              
             />
             <TextField
               margin="normal"
@@ -95,7 +93,7 @@ const [password, setPassword] = useState('');
               type="password"
               id="password"
               autoComplete="current-password"
-              onChange={(e) => setPassword(e.target.value)}
+              
             />
            
             <Button
